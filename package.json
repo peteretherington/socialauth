@@ -8,15 +8,17 @@
 		"start": "nodemon server.js"
 	},
 	"dependencies": {
-		"express": "^4.14.1",
-		"cors": "^2.8.1",
 		"body-parser": "^1.16.0",
-		"mongodb": "^2.2.22",
-		"helmet": "^3.4.0",
-		"pug": "^0.1.0",
-		"passport": "^0.3.2",
+		"cors": "^2.8.1",
+		"dotenv": "^8.2.0",
+		"express": "^4.14.1",
 		"express-session": "^1.15.0",
-		"passport-local": "^1.0.0"
+		"helmet": "^3.4.0",
+		"mongodb": "^2.2.22",
+		"nodemon": "^2.0.3",
+		"passport": "^0.3.2",
+		"passport-local": "^1.0.0",
+		"pug": "^0.1.0"
 	},
 	"engines": {
 		"node": "4.4.3"
@@ -30,8 +32,5 @@
 		"hyperdev",
 		"express"
 	],
-	"license": "MIT",
-	"devDependencies": {
-		"nodemon": "^2.0.3"
-	}
+	"license": "MIT"
 }
