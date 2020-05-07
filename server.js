@@ -8,7 +8,7 @@ const fccTesting = require('./freeCodeCamp/fcctesting.js');
 const mongo = require('mongodb').MongoClient;
 const passport = require('passport');
 const session = require('express-session');
-// const GitHubStrategy = require('passport-github').Strategy;
+const GitHubStrategy = require('passport-github').Strategy;
 
 const app = express();
 
@@ -53,20 +53,18 @@ mongo.connect(process.env.DATABASE, (err, db) => {
 			});
 		});
 
-		// passport.use(
-		// 	new GitHubStrategy(
-		// 		{
-		// 			clientID: process.env.GITHUB_CLIENT_ID,
-		// 			clientSecret: process.env.GITHUB_CLIENT_SECRET,
-		// 			callbackURL: process.env.GITHUB_CALLBACK_URI,
-		// 		},
-		// 		(accessToken, refreshToken, profile, cb) => {
-		// 			User.findOrCreate({ githubId: profile.id }, function (err, user) {
-		// 				return cb(err, user);
-		// 			});
-		// 		}
-		// 	)
-		// );
+		passport.use(
+			new GitHubStrategy(
+				{
+					clientID: process.env.GITHUB_CLIENT_ID,
+					clientSecret: process.env.GITHUB_CLIENT_SECRET,
+					callbackURL: process.env.GITHUB_CALLBACK_URI,
+				},
+				(accessToken, refreshToken, profile, cb) => {
+					console.log(profile);
+				}
+			)
+		);
 
 		app.route('/auth/github').get(passport.authenticate('github'));
 
