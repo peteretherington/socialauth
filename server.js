@@ -2,12 +2,13 @@
 
 if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 
-const express = require('express');
 const bodyParser = require('body-parser');
+const express = require('express');
 const fccTesting = require('./freeCodeCamp/fcctesting.js');
-const session = require('express-session');
 const mongo = require('mongodb').MongoClient;
 const passport = require('passport');
+const session = require('express-session');
+// const GitHubStrategy = require('passport-github').Strategy;
 
 const app = express();
 
@@ -52,13 +53,26 @@ mongo.connect(process.env.DATABASE, (err, db) => {
 			});
 		});
 
-		/*
-		 *  ADD YOUR CODE BELOW
-		 */
+		// passport.use(
+		// 	new GitHubStrategy(
+		// 		{
+		// 			clientID: process.env.GITHUB_CLIENT_ID,
+		// 			clientSecret: process.env.GITHUB_CLIENT_SECRET,
+		// 			callbackURL: process.env.GITHUB_CALLBACK_URI,
+		// 		},
+		// 		(accessToken, refreshToken, profile, cb) => {
+		// 			User.findOrCreate({ githubId: profile.id }, function (err, user) {
+		// 				return cb(err, user);
+		// 			});
+		// 		}
+		// 	)
+		// );
 
-		/*
-		 *  ADD YOUR CODE ABOVE
-		 */
+		app.route('/auth/github').get(passport.authenticate('github'));
+
+		app.route('/auth/github/callback').get(passport.authenticate('github', { failureRedirect: '/' }), (req, res) => {
+			res.redirect('/profile');
+		});
 
 		app.route('/').get((req, res) => {
 			res.render(process.cwd() + '/views/pug/index');
